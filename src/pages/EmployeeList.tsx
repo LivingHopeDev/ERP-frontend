@@ -143,7 +143,7 @@ const employees: IEmployee[] = [
     salary: 200,
   },
 ];
-const AdminDashboard = () => {
+const EmployeeList = () => {
   const [totalPage, setTotalPage] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
@@ -170,15 +170,27 @@ const AdminDashboard = () => {
   };
 
   return (
-    <div className="p-20">
+    <div className="p-4">
       <h1 className="text-3xl font-bold mb-4">Admin Dashboard</h1>
-
-      <div className="bg-white p-6 rounded-lg shadow-md">
-        <h2 className="text-2xl font-semibold mb-4">Analytics</h2>
-        <AnalyticsChart />
+      <div className="flex justify-end p-2 ">
+        <button
+          onClick={handleAddEmployee}
+          className="border-2 p-2 rounded-md "
+        >
+          Add Employee
+        </button>
       </div>
+      <Table
+        data={employees}
+        onEdit={handleEditEmployee}
+        onDelete={handleDeleteEmployee}
+        totalPages={totalPage}
+        currentPage={currentPage}
+        setCurrentPage={setCurrentPage}
+      />
+      <AddEmployeeModal isOpen={isModalOpen} onClose={closeModal} />
     </div>
   );
 };
 
-export default AdminDashboard;
+export default EmployeeList;
