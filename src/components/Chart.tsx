@@ -47,7 +47,7 @@ export const AnalyticsChart: React.FC = () => {
   };
 
   return (
-    <div className="h-80 w-full">
+    <div className="h-[30rem] w-full">
       <Bar data={data} options={options} />
     </div>
   );

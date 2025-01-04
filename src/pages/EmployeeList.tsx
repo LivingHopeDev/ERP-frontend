@@ -1,9 +1,7 @@
-import { useState } from "react";
-// import { useStore } from "../../store/useStore";
-// import Button from "../components/Button";
+import SidebarWrapper from "../components/SidebarWrapper";
 import Table from "../components/Table";
 import AddEmployeeModal from "../components/AddEmployeeModal";
-import { AnalyticsChart } from "../components/Chart";
+import { useState } from "react";
 
 export interface IEmployee {
   id: string;
@@ -14,182 +12,58 @@ export interface IEmployee {
   joiningDate: string;
   salary: number;
 }
-
 const employees: IEmployee[] = [
+  // Dummy data
   {
     id: "1",
-    name: "shun",
-    email: "shun@mail.com",
-    department: "engineering",
-    role: "employee",
-    joiningDate: "2024-05-12",
-    salary: 200,
+    name: "John Doe",
+    email: "john.doe@mail.com",
+    department: "HR",
+    role: "Admin",
+    joiningDate: "2024-01-10",
+    salary: 3000,
   },
   {
     id: "2",
-    name: "shun",
-    email: "shun@mail.com",
-    department: "engineering",
-    role: "employee",
-    joiningDate: "2024-05-12",
-    salary: 200,
-  },
-  {
-    id: "3",
-    name: "shun",
-    email: "shun@mail.com",
-    department: "engineering",
-    role: "employee",
-    joiningDate: "2024-05-12",
-    salary: 200,
-  },
-  {
-    id: "3",
-    name: "shun",
-    email: "shun@mail.com",
-    department: "engineering",
-    role: "employee",
-    joiningDate: "2024-05-12",
-    salary: 200,
-  },
-  {
-    id: "3",
-    name: "shun",
-    email: "shun@mail.com",
-    department: "engineering",
-    role: "employee",
-    joiningDate: "2024-05-12",
-    salary: 200,
-  },
-  {
-    id: "3",
-    name: "shun",
-    email: "shun@mail.com",
-    department: "engineering",
-    role: "employee",
-    joiningDate: "2024-05-12",
-    salary: 200,
-  },
-  {
-    id: "3",
-    name: "shun",
-    email: "shun@mail.com",
-    department: "engineering",
-    role: "employee",
-    joiningDate: "2024-05-12",
-    salary: 200,
-  },
-  {
-    id: "3",
-    name: "shun",
-    email: "shun@mail.com",
-    department: "engineering",
-    role: "employee",
-    joiningDate: "2024-05-12",
-    salary: 200,
-  },
-  {
-    id: "3",
-    name: "shun",
-    email: "shun@mail.com",
-    department: "engineering",
-    role: "employee",
-    joiningDate: "2024-05-12",
-    salary: 200,
-  },
-  {
-    id: "3",
-    name: "shun",
-    email: "shun@mail.com",
-    department: "engineering",
-    role: "employee",
-    joiningDate: "2024-05-12",
-    salary: 200,
-  },
-  {
-    id: "3",
-    name: "shun",
-    email: "shun@mail.com",
-    department: "engineering",
-    role: "employee",
-    joiningDate: "2024-05-12",
-    salary: 200,
-  },
-  {
-    id: "3",
-    name: "shun",
-    email: "shun@mail.com",
-    department: "engineering",
-    role: "employee",
-    joiningDate: "2024-05-12",
-    salary: 200,
-  },
-  {
-    id: "3",
-    name: "shun",
-    email: "shun@mail.com",
-    department: "engineering",
-    role: "employee",
-    joiningDate: "2024-05-12",
-    salary: 200,
-  },
-  {
-    id: "3",
-    name: "shun",
-    email: "shun@mail.com",
-    department: "engineering",
-    role: "employee",
-    joiningDate: "2024-05-12",
-    salary: 200,
+    name: "Jane Smith",
+    email: "jane.smith@mail.com",
+    department: "Finance",
+    role: "Employee",
+    joiningDate: "2023-03-15",
+    salary: 2500,
   },
 ];
+
 const EmployeeList = () => {
-  const [totalPage, setTotalPage] = useState(0);
-  const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 10;
-  //   const { employees, deleteEmployee, setSelectedEmployee } = useStore();
   const [isModalOpen, setModalOpen] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(0);
 
-  const handleAddEmployee = () => {
-    setModalOpen(true);
-  };
-
-  const handleEditEmployee = (id: string) => {
-    // const employee = employees.find((emp) => emp.id === id);
-    // if (employee) {
-    //   setSelectedEmployee(employee);
-    // }
-  };
-
-  const handleDeleteEmployee = (id: string) => {
-    // deleteEmployee(id);
-  };
-
-  const closeModal = () => {
-    setModalOpen(false);
-  };
+  const handleAddEmployee = () => setModalOpen(true);
+  const closeModal = () => setModalOpen(false);
 
   return (
-    <div className="p-4">
-      <h1 className="text-3xl font-bold mb-4">Admin Dashboard</h1>
-      <div className="flex justify-end p-2 ">
+    <SidebarWrapper role="admin">
+      <div className="flex justify-end p-2">
         <button
           onClick={handleAddEmployee}
-          className="border-2 p-2 rounded-md "
+          className="border-2 p-2 rounded-md text-white bg-blue-600 hover:bg-blue-700"
         >
           Add Employee
         </button>
       </div>
-      <Table
-        data={employees}
-        onEdit={handleEditEmployee}
-        onDelete={handleDeleteEmployee}
-        totalPages={totalPage}
-        currentPage={currentPage}
-        setCurrentPage={setCurrentPage}
-      />
+      <div className="rounded-lg border shadow-md max-w-[24rem] md:max-w-4xl lg:max-w-5xl ">
+        <Table
+          data={employees}
+          onEdit={() => {}}
+          onDelete={() => {}}
+          totalPages={totalPages}
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+        />
+      </div>
       <AddEmployeeModal isOpen={isModalOpen} onClose={closeModal} />
-    </div>
+    </SidebarWrapper>
   );
 };
 
