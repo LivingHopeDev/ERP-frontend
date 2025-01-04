@@ -1,10 +1,6 @@
-import { useState } from "react";
-// import { useStore } from "../../store/useStore";
-// import Button from "../components/Button";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 
-// Yup validation schema
 const validationSchema = Yup.object({
   name: Yup.string().required("Name is required"),
   department: Yup.string().required("Department is required"),
