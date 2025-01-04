@@ -19,7 +19,6 @@ ChartJS.register(
 );
 
 export const AnalyticsChart: React.FC = () => {
-  // Dummy data for the chart
   const data = {
     labels: ["Engineering", "HR", "Finance", "Marketing"],
     datasets: [
@@ -47,7 +46,7 @@ export const AnalyticsChart: React.FC = () => {
   };
 
   return (
-    <div className="h-[30rem] w-full">
+    <div className="w-full h-[15rem] sm:h-[20rem]">
       <Bar data={data} options={options} />
     </div>
   );

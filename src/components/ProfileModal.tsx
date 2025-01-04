@@ -1,12 +1,10 @@
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
-import { IProfileDetails } from "../pages/EmployeeDashboard";
 import { IoCloseOutline } from "react-icons/io5";
-
 type ProfileModalProps = {
   isOpen: boolean;
   onClose: () => void;
-  personalDetails: IProfileDetails;
+  personalDetails: any;
 };
 const ProfileModal = ({
   isOpen,
@@ -36,7 +34,7 @@ const ProfileModal = ({
         <div className="flex justify-end cursor-pointer">
           <IoCloseOutline className="w-5 h-5" onClick={onClose} />
         </div>
-        <h2 className="text-2xl font-semibold mb-4">Update Profile</h2>
+        <h2 className="text-2xl font-semibold mb-4">Edit Profile</h2>
         <Formik
           initialValues={{
             name: personalDetails.name || "",

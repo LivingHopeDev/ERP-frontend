@@ -14,7 +14,7 @@ const Sidebar: React.FC<{ role: "admin" | "employee" }> = ({ role }) => {
         ];
 
   return (
-    <div className="w-64 bg-gray-800 text-white min-h-screen flex flex-col ">
+    <div className="w-64 bg-[#1F2937] text-white min-h-screen flex flex-col ">
       <div className="p-4 text-2xl font-bold border-b border-gray-700">
         HR ERP
       </div>
