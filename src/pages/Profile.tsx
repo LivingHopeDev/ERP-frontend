@@ -1,31 +1,47 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ProfileModal from "../components/ProfileModal";
 import { BiEdit } from "react-icons/bi";
 import SidebarWrapper from "../components/SidebarWrapper";
-
-export interface IProfileDetails {
-  name: string;
+import api from "../utils/apiHelper";
+import { toast } from "react-toastify";
+export interface IEmployeeResponse {
+  id: string;
   email: string;
-  department: string;
-  joiningDate: string;
   role: string;
-  salary: number;
+  createdAt: string;
+  updatedAt: string;
+  employeeId: string;
+  employee: {
+    id: string;
+    name: string;
+    email: string;
+    department: string;
+    salary: number;
+    joiningDate: string;
+    createdAt: string;
+    updatedAt: string;
+  };
 }
-
-const personalDetails = {
-  name: "Jane Doe",
-  email: "jane.doe@example.com",
-  department: "Marketing",
-  joiningDate: "2025-01-02",
-  role: "Employee",
-  salary: 200,
-};
 
 const Profile: React.FC = () => {
   const [isModalOpen, setModalOpen] = useState(false);
   const closeModal = () => {
     setModalOpen(false);
   };
+  const [profile, setProfile] = useState<IEmployeeResponse | null>(null);
+  const fetchProfile = async () => {
+    try {
+      const response = await api.get("profile");
+      setProfile(response.data.data);
+    } catch (error: any) {
+      toast.error(error.message);
+    }
+  };
+
+  useEffect(() => {
+    fetchProfile();
+  }, []);
+  const user = profile?.employee;
 
   return (
     <SidebarWrapper role="employee">
@@ -34,9 +50,6 @@ const Profile: React.FC = () => {
           <div className="bg-gradient-to-r from-blue-500 to-blue-700 h-40 flex items-center justify-center">
             <div className="text-center">
               <h2 className="text-white text-4xl font-bold">My Profile</h2>
-              <p className="text-blue-200 text-lg">
-                Welcome, {personalDetails.name}!
-              </p>
             </div>
           </div>
 
@@ -54,32 +67,34 @@ const Profile: React.FC = () => {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mt-4">
               <div>
                 <h4 className="text-gray-600 font-semibold">Name</h4>
-                <p className="text-gray-800 text-lg">{personalDetails.name}</p>
+                <p className="text-gray-800 text-lg">{user?.name}</p>
               </div>
               <div>
                 <h4 className="text-gray-600 font-semibold">Email</h4>
-                <p className="text-gray-800 text-lg">{personalDetails.email}</p>
+                <p className="text-gray-800 text-lg">{user?.email}</p>
               </div>
               <div>
                 <h4 className="text-gray-600 font-semibold">Department</h4>
-                <p className="text-gray-800 text-lg">
-                  {personalDetails.department}
-                </p>
+                <p className="text-gray-800 text-lg">{user?.department}</p>
               </div>
               <div>
                 <h4 className="text-gray-600 font-semibold">Role</h4>
-                <p className="text-gray-800 text-lg">{personalDetails.role}</p>
+                <p className="text-gray-800 text-lg">{profile?.role}</p>
               </div>
               <div>
                 <h4 className="text-gray-600 font-semibold">Salary</h4>
-                <p className="text-gray-800 text-lg">
-                  ${personalDetails.salary}
-                </p>
+                <p className="text-gray-800 text-lg">${user?.salary}</p>
               </div>
               <div>
                 <h4 className="text-gray-600 font-semibold">Joining Date</h4>
                 <p className="text-gray-800 text-lg">
-                  {personalDetails.joiningDate}
+                  {user?.joiningDate
+                    ? new Intl.DateTimeFormat("en-US", {
+                        year: "numeric",
+                        month: "long",
+                        day: "numeric",
+                      }).format(new Date(user.joiningDate))
+                    : "No joining date"}
                 </p>
               </div>
             </div>
@@ -88,7 +103,7 @@ const Profile: React.FC = () => {
 
         {isModalOpen && (
           <ProfileModal
-            personalDetails={personalDetails}
+            profile={profile}
             isOpen={isModalOpen}
             onClose={closeModal}
           />

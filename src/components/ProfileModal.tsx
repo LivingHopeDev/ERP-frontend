@@ -1,16 +1,17 @@
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { IoCloseOutline } from "react-icons/io5";
+import { useState } from "react";
+import { toast } from "react-toastify";
+import api from "../utils/apiHelper";
 type ProfileModalProps = {
   isOpen: boolean;
   onClose: () => void;
-  personalDetails: any;
+  profile: any;
 };
-const ProfileModal = ({
-  isOpen,
-  onClose,
-  personalDetails,
-}: ProfileModalProps) => {
+const ProfileModal = ({ isOpen, onClose, profile }: ProfileModalProps) => {
+  const [loading, setLoading] = useState(false);
+
   const validationSchema = Yup.object({
     name: Yup.string()
       .max(50, "Name must be 50 characters or less")
@@ -22,9 +23,22 @@ const ProfileModal = ({
     joiningDate: Yup.string().required("Date is required"),
   });
 
-  const handleSubmit = (values: any) => {
-    console.log("Profile Updated:", values);
-    // Placeholder for update profile logic
+  const handleSubmit = async (formData: {
+    name: string;
+    email: string;
+    department: string;
+    joiningDate: string;
+  }) => {
+    try {
+      setLoading(true);
+      const response = await api.patch("profile", formData);
+      toast.success(response.data.message);
+    } catch (error: any) {
+      toast.error(error.message);
+    } finally {
+      setLoading(false);
+      onClose();
+    }
   };
   if (!isOpen) return null;
 
@@ -37,10 +51,12 @@ const ProfileModal = ({
         <h2 className="text-2xl font-semibold mb-4">Edit Profile</h2>
         <Formik
           initialValues={{
-            name: personalDetails.name || "",
-            email: personalDetails.email || "",
-            department: personalDetails.department || "",
-            joiningDate: personalDetails.joiningDate || "",
+            name: profile?.employee.name || "",
+            email: profile?.employee.email || "",
+            department: profile?.employee.department || "",
+            joiningDate:
+              new Date(profile?.employee.joiningDate).toLocaleDateString() ||
+              "",
           }}
           validationSchema={validationSchema}
           onSubmit={handleSubmit}
@@ -106,13 +122,21 @@ const ProfileModal = ({
                 className="text-red-500 text-sm mt-1"
               />
             </div>
-
-            <button
-              type="submit"
-              className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition duration-200"
-            >
-              Update Profile
-            </button>
+            {loading ? (
+              <button
+                type="submit"
+                className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition duration-200"
+              >
+                Please wait...
+              </button>
+            ) : (
+              <button
+                type="submit"
+                className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition duration-200"
+              >
+                Update Profile
+              </button>
+            )}
           </Form>
         </Formik>
       </div>
