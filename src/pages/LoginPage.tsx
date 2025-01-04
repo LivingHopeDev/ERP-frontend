@@ -1,6 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { Field, ErrorMessage, Form, Formik } from "formik";
 import * as Yup from "yup";
+import useAuthStore from "../store/auth-store";
+import api from "../utils/apiHelper";
+import { useNavigate } from "react-router-dom";
 
 const LoginSchema = Yup.object().shape({
   email: Yup.string()
@@ -10,6 +13,29 @@ const LoginSchema = Yup.object().shape({
 });
 
 const LoginPage: React.FC = () => {
+  const login = useAuthStore((state) => state.login);
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+  const handleLogin = async (formData: { password: string; email: string }) => {
+    try {
+      setLoading(true);
+      const response = await api.post("auth/login", formData);
+      const { token, user } = response.data;
+      const role = user.role;
+      login(token, role);
+
+      if (role === "admin") {
+        navigate("/admin/dashboard");
+      } else if (role === "employee") {
+        navigate("/dashboard");
+      }
+    } catch (error: any) {
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
       <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
@@ -19,7 +45,7 @@ const LoginPage: React.FC = () => {
           initialValues={{ email: "", password: "" }}
           validationSchema={LoginSchema}
           onSubmit={(values) => {
-            console.log(values);
+            handleLogin(values);
           }}
         >
           {({ isSubmitting }) => (
@@ -67,13 +93,22 @@ const LoginPage: React.FC = () => {
               </div>
 
               <div className="flex flex-col gap-4">
-                <button
-                  type="submit"
-                  className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition duration-200"
-                  disabled={isSubmitting}
-                >
-                  Login
-                </button>
+                {loading ? (
+                  <button
+                    type="submit"
+                    className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition duration-200"
+                  >
+                    loading...
+                  </button>
+                ) : (
+                  <button
+                    type="submit"
+                    className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition duration-200"
+                    // disabled={isSubmitting}
+                  >
+                    Login
+                  </button>
+                )}
               </div>
             </Form>
           )}

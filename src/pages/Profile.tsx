@@ -30,7 +30,6 @@ const Profile: React.FC = () => {
   return (
     <SidebarWrapper role="employee">
       <div className="p-6 bg-gray-50 min-h-[50vh]">
-        {/* Profile Header */}
         <div className="max-w-3xl mx-auto bg-white shadow-xl rounded-lg overflow-hidden">
           <div className="bg-gradient-to-r from-blue-500 to-blue-700 h-40 flex items-center justify-center">
             <div className="text-center">
@@ -41,10 +40,8 @@ const Profile: React.FC = () => {
             </div>
           </div>
 
-          {/* Profile Details */}
           <div className="p-6">
             <div className="relative">
-              {/* Edit Button */}
               <button
                 onClick={() => setModalOpen(true)}
                 className="absolute top-0 right-0 bg-blue-500 text-white p-2 rounded-full hover:bg-blue-600 shadow-md"
