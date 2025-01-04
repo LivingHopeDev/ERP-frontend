@@ -38,6 +38,16 @@ const EmployeeList = () => {
       setLoading(false);
     }
   };
+
+  const handleDelete = async (employeeId: string) => {
+    try {
+      await api.delete(`employee/${employeeId}`);
+
+      toast.success("Deleted successfully");
+    } catch (error: any) {
+      toast.error(error.message);
+    }
+  };
   useEffect(() => {
     fetchEmployee(currentPage, itemsPerPage);
   }, []);
@@ -59,7 +69,7 @@ const EmployeeList = () => {
             <Table
               data={employees}
               onEdit={() => {}}
-              onDelete={() => {}}
+              onDelete={handleDelete}
               totalPages={totalPages}
               currentPage={currentPage}
               setCurrentPage={setCurrentPage}
