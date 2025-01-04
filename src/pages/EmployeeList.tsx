@@ -41,7 +41,6 @@ const EmployeeList = () => {
   useEffect(() => {
     fetchEmployee(currentPage, itemsPerPage);
   }, []);
-  if (loading) return;
   return (
     <SidebarWrapper role="admin">
       {loading ? (

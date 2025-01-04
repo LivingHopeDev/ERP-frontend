@@ -61,7 +61,7 @@ const LoginPage: React.FC = () => {
                   type="email"
                   name="email"
                   id="email"
-                  className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                  className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm outline-none"
                   placeholder="Enter your email"
                 />
                 <ErrorMessage
@@ -82,7 +82,7 @@ const LoginPage: React.FC = () => {
                   type="password"
                   name="password"
                   id="password"
-                  className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                  className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm outline-none"
                   placeholder="Enter your password"
                 />
                 <ErrorMessage
