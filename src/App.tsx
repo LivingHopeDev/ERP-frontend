@@ -7,8 +7,7 @@ import Profile from "./pages/Profile";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
 import ProtectedRoute from "./components/ProtectedRoute";
-import { useEffect } from "react";
-import useAuthStore from "./store/auth-store";
+
 const App = () => {
   return (
     <>
