@@ -1,5 +1,7 @@
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
+import api from "../utils/apiHelper";
+import { toast } from "react-toastify";
 
 const validationSchema = Yup.object({
   name: Yup.string().required("Name is required"),
@@ -16,17 +18,19 @@ type AddEmployeeModalProps = {
 };
 
 const AddEmployeeModal = ({ isOpen, onClose }: AddEmployeeModalProps) => {
-  //   const { addEmployee } = useStore();
-
-  // Form submission handler
-  const handleSubmit = (values: {
+  const handleSubmit = async (formData: {
     name: string;
     department: string;
     email: string;
     role: string;
   }) => {
-    const newEmployee = { id: Date.now(), ...values };
-    // addEmployee(newEmployee);
+    try {
+      const response = await api.post("/employees", formData);
+      toast.success("Employee created successfully!");
+      return response;
+    } catch (error) {
+      console.error("Error creating employee:", error);
+    }
     onClose();
   };
 

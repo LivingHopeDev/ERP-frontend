@@ -10,8 +10,6 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import { useEffect } from "react";
 import useAuthStore from "./store/auth-store";
 const App = () => {
-  const hydrate = useAuthStore((state) => state.hydrate);
-  useEffect(() => {}, [hydrate]);
   return (
     <>
       <ToastContainer
