@@ -41,7 +41,9 @@ const Table = ({
                 <td className="border px-4 py-2">{employee.email}</td>
                 <td className="border px-4 py-2">{employee.department}</td>
                 <td className="border px-4 py-2">{employee.role}</td>
-                <td className="border px-4 py-2">{employee.joiningDate}</td>
+                <td className="border px-4 py-2">
+                  {new Date(employee.joiningDate).toLocaleDateString()}
+                </td>
                 <td className="border px-4 py-2">$ {employee.salary}</td>
                 <td className="border px-4 py-2">
                   <button

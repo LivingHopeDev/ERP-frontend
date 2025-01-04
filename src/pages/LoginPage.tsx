@@ -20,7 +20,7 @@ const LoginPage: React.FC = () => {
     try {
       setLoading(true);
       const response = await api.post("auth/login", formData);
-      const { token, user } = response.data;
+      const { token, user } = response.data.data;
       const role = user.role;
       login(token, role);
 
