@@ -56,3 +56,31 @@ npm install
 npm run dev
 
 ```
+
+## Project Functionality
+
+### Login Page
+
+- Authentication for Admin and Employee roles.
+- Separate dashboards are shown based on the role.
+
+### Admin Dashboard
+
+- Add Employee:
+
+  - A form to add new employee records.
+
+- Employee List:
+
+  - A table listing all employees with options to edit or delete records.
+
+- Analytics:
+
+  - Display total employees and headcount by department in a chart.
+
+### Employee Dashboard
+
+- View Profile:
+  - View personal details such as name, email, and department.
+- Update Profile:
+  - A form to update profile details.
