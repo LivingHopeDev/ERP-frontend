@@ -84,3 +84,10 @@ npm run dev
   - View personal details such as name, email, and department.
 - Update Profile:
   - A form to update profile details.
+
+## Technologies Used
+
+- Frontend Framework: React with Vite
+- State Management: Zustand
+- Charts: Any lightweight chart library (e.g., Chart.js or Recharts)
+- Backend:RESTFUL API
